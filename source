@@ -312,6 +312,13 @@ end)
 local Extra = Window:NewTab("Extra")
 local ExtraSection = Extra:NewSection("Extra")
 
+ExtraSection:NewSlider("WalkSpeed", "Changes your walk speed", 250, 50, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+ExtraSection:NewSlider("JumpPower", "Changes your jump power", 250, 50, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
 ExtraSection:NewToggle("Summon", "summons a stand", function(v)
     getgenv().autosummon = v
     while true do
