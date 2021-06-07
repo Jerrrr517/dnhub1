@@ -1,0 +1,328 @@
+if game.PlaceId == 155615604 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Prison Life", "Synapse")
+
+    -- Main
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Guns")
+    MainSection:NewDropdown("Give Gun", "Gives you gun", {"M9", "Remington 870", "AK-47"}, function(v)
+        local A_1 = game:GetService("Workspace")["Prison_ITEMS"].giver[v].ITEMPICKUP
+        local Event = game:GetService("Workspace").Remote.ItemHandler
+        Event:InvokeServer(A_1)
+    end)
+
+    MainSection:NewDropdown("Gun Mods", "Makes the gun good", {"M9", "Remington 870", "AK-47"}, function(v)
+        local module = nil
+        if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v) then
+            module = require(game:GetService("Players").LocalPlayer.Backpack[v].GunStates)
+        elseif game:GetService("Players").LocalPlayer.Character:FindFirstChild(v) then
+            module = require(game:GetService("Players").LocalPlayer.Character[v].GunStates)
+        end
+        if module ~= nil then
+            module["MaxAmmo"] = math.huge
+            module["CurrentAmmo"] = math.huge
+            module["StoredAmmo"] = math.huge
+            module["FireRate"] = 0.000001
+            module["Range"] = math.huge
+            module["Bullets"] = 10
+            module["ReloadTime"] = 0.000001
+            module["AutoFire"] = true
+        end
+    end)
+
+    -- Player
+    local Player = Window:NewTab("Player")
+    local PlayerSection = Player:NewSection("Player")
+    PlayerSection:NewSlider("WalkSpeed", "Changes your walk speed", 250, 50, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end)
+    PlayerSection:NewSlider("JumpPower", "Changes your jump power", 250, 50, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+    end)
+elseif game.PlaceId == 3956818381 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Ninja Legends", "Synapse")
+
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Main")
+
+-- Main
+    MainSection:NewToggle("Auto Swing", "Make you autoswing", function(v)
+        getgenv().autoswing = v
+        while true do
+        if not getgenv().autoswing then return end
+            for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if v:FindFirstChild("ninjitsuGain") then
+                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+                break
+            end
+        end
+                local A_1 = "swingKatana"
+                local Event = game:GetService("Players").LocalPlayer.ninjaEvent
+                Event:FireServer(A_1)
+            wait(0.1)
+        end
+    end)
+
+    MainSection:NewToggle("Auto Sell", "Make you autoswing", function(v)
+        getgenv().autosell = v
+        while true do
+            if getgenv().autosell == false then return end
+            print(game:GetService("Workspace").sellAreaCircles["sellAreaCircle"].circleInner.CFrame)
+            game:GetService("Workspace").sellAreaCircles["sellAreaCircle"].circleInner.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            wait(0.1)
+            game:GetService("Workspace").sellAreaCircles["sellAreaCircle"].circleInner.CFrame = CFrame.new(0,0,0)
+            wait(0.1)
+        return
+        end
+    end)
+    MainSection:NewButton("Auto Unlock all islands", "Unlocks all islands", function()
+        local oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        for _,v in pairs(game:GetService("Workspace").islandUnlockParts:GetChildren()) do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+            wait(0.2)
+        end
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldcframe
+    end)
+    MainSection:NewToggle("Auto Buy all swords", "Buys all swords", function(v)
+        getgenv().buysword = v
+        while true do
+            if not getgenv().buysword then return end
+            local A_1 = "buyAllSwords"
+            local Event = game:GetService("Players").LocalPlayer.ninjaEvent
+            Event:FireServer(A_1)
+        wait(0.5)
+        end
+    end)
+
+    MainSection:NewToggle("Auto Buy all belts", "Buys all belts", function(v)
+        getgenv().buybelts = v
+        while true do
+            if not getgenv().buybelts then return end
+            local A_1 = "buyAllBelts"
+            local Event = game:GetService("Players").LocalPlayer.ninjaEvent
+            Event:FireServer(A_1)
+        wait(0.5)
+    end
+end)
+
+elseif game.PlaceId == 4042427666 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Anime Fighting Simulator", "Synapse")
+    -- MAIN
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Main")
+
+    MainSection:NewToggle("Auto Strength", "Make you get strength automaticlly", function(v)
+        getgenv().autostrength = v
+        while true do
+            if not getgenv().autostrength then return end
+            local args = {
+                [1] = "SpecialAction",
+                [2] = {
+                    ["Request"] = "Click"
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.GeneralEvent:FireServer(unpack(args))
+            wait(0.5)
+            local args = {
+                [1] = "Stat",
+                [2] = "Strength"
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.StatFunction:InvokeServer(unpack(args))
+        wait(0.5)
+        end
+    end)
+    MainSection:NewToggle("Auto Durability", "Make you get durability automaticlly", function(v)
+        getgenv().autodurability = v
+        while true do
+            if not getgenv().autodurability then return end
+            local args = {
+                [1] = "SpecialAction",
+                [2] = {
+                    ["Request"] = "Click"
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.GeneralEvent:FireServer(unpack(args))
+            wait(0.5)
+            local args = {
+                [1] = "Stat",
+                [2] = "Durability"
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.StatFunction:InvokeServer(unpack(args))
+        wait(0.5)
+end
+end)
+MainSection:NewToggle("Auto Chakra", "Make you get chakra automaticlly", function(v)
+    getgenv().autochakra = v
+    while true do
+        if not getgenv().autochakra then return end
+        local args = {
+            [1] = "SpecialAction",
+            [2] = {
+                ["Request"] = "Click"
+            }
+        }
+        
+        game:GetService("ReplicatedStorage").RSPackage.Events.GeneralEvent:FireServer(unpack(args))
+        wait(0.5)
+        local args = {
+            [1] = "Stat",
+            [2] = "Chakra"
+        }
+        
+        game:GetService("ReplicatedStorage").RSPackage.Events.StatFunction:InvokeServer(unpack(args))
+    wait(2)
+end
+end)
+MainSection:NewToggle("Auto Speed", "Make you get speed automaticlly", function(v)
+    getgenv().autospeed = v
+    while true do
+        if not getgenv().autospeed then return end
+        local humanoid = game.Players.LocalPlayer.Character.Humanoid
+        humanoid:ChangeState(Enum.HumanoidStateType.Running)
+            local args = {
+                [1] = "Stat",
+                [2] = "Speed"
+            }
+
+            game:GetService("ReplicatedStorage").RSPackage.Events.StatFunction:InvokeServer(unpack(args))
+    wait(1)
+    end
+    end)
+
+    MainSection:NewToggle("Auto Sword", "Make you get sword automaticlly", function(v)
+        getgenv().autosword = v
+        while true do
+            if not getgenv().autosword then return end
+            local args = {
+                [1] = "SpecialAction",
+                [2] = {
+                    ["Request"] = "Click"
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.GeneralEvent:FireServer(unpack(args))
+            wait(0.5)
+            local args = {
+                [1] = "Stat",
+                [2] = "Sword"
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.StatFunction:InvokeServer(unpack(args))
+        wait(2)
+    end
+    end)
+    local Upgrades = Window:NewTab("Upgrades")
+    local UpgradesSection = Upgrades:NewSection("Upgrades")
+
+    UpgradesSection:NewToggle("Upgrade Speed", "Make you upgrade speed", function(v)
+        getgenv().upgradespeed = v
+        while true do
+            if not getgenv().upgradespeed then return end
+            local args = {
+                [1] = "Upgrade",
+                [2] = "Speed"
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.GeneralFunction:InvokeServer(unpack(args))
+            wait(6)
+        end
+    end)
+    UpgradesSection:NewToggle("Upgrade Sword", "Make you upgrade sword", function(v)
+        getgenv().upgradesword = v
+        while true do
+            if not getgenv().upgradesword then return end
+            local args = {
+                [1] = "Upgrade",
+                [2] = "Sword"
+            }
+            
+            game:GetService("ReplicatedStorage").RSPackage.Events.GeneralFunction:InvokeServer(unpack(args))
+            wait(6)
+        end
+    end)
+    UpgradesSection:NewToggle("Upgrade Chakra", "Make you upgrade chakra", function(v)
+        getgenv().upgradechakra = v
+        while true do
+            if not getgenv().upgradechakra then return end
+                local args = {
+                    [1] = "Upgrade",
+                    [2] = "Chakra"
+                }
+
+                game:GetService("ReplicatedStorage").RSPackage.Events.GeneralFunction:InvokeServer(unpack(args))
+            wait(6)
+        end
+    end)
+UpgradesSection:NewToggle("Upgrade Durability", "Make you upgrade ability", function(v)
+    getgenv().upgradedability = v
+    while true do
+        if not getgenv().upgradedability then return end
+        local args = {
+            [1] = "Upgrade",
+            [2] = "Durability"
+        }
+        
+        game:GetService("ReplicatedStorage").RSPackage.Events.GeneralFunction:InvokeServer(unpack(args))        
+        wait(6)
+    end
+end)
+UpgradesSection:NewToggle("Upgrade Strength", "Make you upgrade strength", function(v)
+    getgenv().upgradestrength = v
+    while true do
+        if not getgenv().upgradestrength then return end
+        local args = {
+            [1] = "Upgrade",
+            [2] = "Strength"
+        }
+        
+        game:GetService("ReplicatedStorage").RSPackage.Events.GeneralFunction:InvokeServer(unpack(args))              
+        wait(6)
+    end
+end)
+UpgradesSection:NewToggle("Upgrade Agility", "Make you upgrade agility", function(v)
+    getgenv().upgradeagility = v
+    while true do
+        if not getgenv().upgradeagility then return end
+        local args = {
+            [1] = "Upgrade",
+            [2] = "Agility"
+        }
+        
+        game:GetService("ReplicatedStorage").RSPackage.Events.GeneralFunction:InvokeServer(unpack(args))           
+        wait(6)
+    end
+end)
+
+local Player = Window:NewTab("Player")
+local PlayerSection = Player:NewSection("Player")
+
+PlayerSection:NewSlider("WalkSpeed", "Changes your walk speed", 250, 50, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+PlayerSection:NewSlider("JumpPower", "Changes your jump power", 250, 50, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+local Extra = Window:NewTab("Extra")
+local ExtraSection = Extra:NewSection("Extra")
+
+ExtraSection:NewToggle("Summon", "summons a stand", function(v)
+    getgenv().autosummon = v
+    while true do
+        if not getgenv().autosummon then return end
+        local args = {
+            [1] = "ChOb",
+            [2] = "Champions"
+        }
+
+        game:GetService("ReplicatedStorage").RSPackage.Events.GeneralFunction:InvokeServer(unpack(args))
+        wait(10)
+    end
+end)
+end
